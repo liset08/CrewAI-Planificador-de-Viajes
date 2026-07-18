@@ -1,0 +1,20 @@
+# ===== Secretos (NUNCA subir) =====
+# Ignora cualquier archivo llamado exactamente .env en cualquier carpeta.
+# Los .env.example SÍ se versionan (no coinciden con este patrón).
+.env
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ===== Sistema operativo =====
+.DS_Store
+
+# ===== Logs / temporales =====
+*.log
+
+# ===== Artefactos generados en cada corrida (no versionar) =====
+itinerary.md
