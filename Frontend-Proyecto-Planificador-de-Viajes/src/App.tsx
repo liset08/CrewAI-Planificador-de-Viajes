@@ -106,6 +106,9 @@ export default function App() {
     if (loading) return;
     const prompt = composePrompt(freeText, filters);
     if (!prompt.trim()) return;
+    // Los filtros ya quedaron incluidos en el prompt: se limpian para que no
+    // se repitan en los siguientes mensajes de la conversación.
+    if (hasAnyFilter) setFilters(EMPTY_FILTERS);
 
     const userMsg: ChatMessage = {
       id: nextId(),
@@ -164,17 +167,15 @@ export default function App() {
           <div className="flex-1 overflow-x-auto">
             <TripFilters value={filters} onChange={setFilters} />
           </div>
-          {allFiltersFilled && (
-            <button
-              type="button"
-              onClick={() => handleSend("")}
-              disabled={loading}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <Sparkles className="h-3.5 w-3.5" />
-              Planificar viaje
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => handleSend("")}
+            disabled={loading || !allFiltersFilled}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            Planificar viaje
+          </button>
         </header>
 
         {/* Área de scroll */}
