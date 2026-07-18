@@ -13,8 +13,13 @@ venv/
 # ===== Sistema operativo =====
 .DS_Store
 
+# ===== Node =====
+node_modules/
+
 # ===== Logs / temporales =====
 *.log
 
 # ===== Artefactos generados en cada corrida (no versionar) =====
 itinerary.md
+.vercel
+.env*
