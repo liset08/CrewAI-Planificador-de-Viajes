@@ -7,7 +7,6 @@ import tailwindcss from "@tailwindcss/vite";
 // el frontend llama a /api/plan-trip y Vite lo reenvía a localhost:8005/plan-trip.
 // Se puede sobreescribir el origen con BACKEND_ORIGIN en el entorno o .env.
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
   const BACKEND_ORIGIN = "https://herramientas-crewai-planificador-de-viajes-github.bvhmwj.easypanel.host";//"http://localhost:8005";
 
   return {
