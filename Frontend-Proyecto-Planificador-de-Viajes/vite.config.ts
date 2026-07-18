@@ -8,7 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 // Se puede sobreescribir el origen con BACKEND_ORIGIN en el entorno o .env.
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
-  const BACKEND_ORIGIN = env.BACKEND_ORIGIN ?? "http://localhost:8005";
+  const BACKEND_ORIGIN = env.BACKEND_ORIGIN ?? "https://herramientas-crewai-planificador-de-viajes-github.bvhmwj.easypanel.host";//"http://localhost:8005";
 
   return {
     plugins: [react(), tailwindcss()],
