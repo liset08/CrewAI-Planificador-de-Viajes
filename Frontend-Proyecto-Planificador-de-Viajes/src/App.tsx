@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Plane, Compass } from "lucide-react";
+import { Plane, Compass, Sparkles } from "lucide-react";
 import Sidebar from "./components/Sidebar";
 import TripFilters from "./components/TripFilters";
 import ChatInput from "./components/ChatInput";
@@ -64,6 +64,10 @@ export default function App() {
   const hasConversation = messages.length > 0;
   const hasAnyFilter = useMemo(
     () => Object.values(filters).some(Boolean),
+    [filters]
+  );
+  const allFiltersFilled = useMemo(
+    () => Object.values(filters).every(Boolean),
     [filters]
   );
 
@@ -160,6 +164,17 @@ export default function App() {
           <div className="flex-1 overflow-x-auto">
             <TripFilters value={filters} onChange={setFilters} />
           </div>
+          {allFiltersFilled && (
+            <button
+              type="button"
+              onClick={() => handleSend("")}
+              disabled={loading}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Planificar viaje
+            </button>
+          )}
         </header>
 
         {/* Área de scroll */}
