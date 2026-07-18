@@ -1,10 +1,12 @@
 # src/travel_crew_backend/main.py
 
 import asyncio
+import os
 import uuid
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
 from datetime import date
@@ -36,6 +38,23 @@ app = FastAPI(
     description="Una API para planificar itinerarios de viaje personalizados usando un equipo de agentes de IA (CrewAI).",
     version="1.0.0",
     lifespan=lifespan,
+)
+
+
+# CORS: Frontend en Vercel + localhost para desarrollo
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173",
+        "https://crew-ai-planificador-de-viajes.vercel.app/",
+    ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class TripRequest(BaseModel):

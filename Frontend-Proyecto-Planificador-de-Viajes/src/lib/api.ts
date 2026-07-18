@@ -2,8 +2,10 @@ import type { ChatTurn, ClasificacionResponse, PlanTripResponse } from "../types
 import { getSessionId } from "./session";
 
 // En desarrollo, VITE_BACKEND_URL = /api/plan-trip (proxy de Vite -> localhost:8005).
-// En producción, se define la URL pública completa del backend.
-const PLAN_TRIP_URL: string =
+// En producción (ej: Vercel), hay que definir esta env var con la URL pública
+// del backend (ej: https://tu-backend.easypanel.host/plan-trip) -- se hornea
+// en el build, así que un cambio acá requiere volver a deployar el frontend.
+export const PLAN_TRIP_URL: string =
   (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? "/api/plan-trip";
 
 // Base del backend derivada de PLAN_TRIP_URL (le quita el "/plan-trip" final),

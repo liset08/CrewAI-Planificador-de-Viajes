@@ -7,7 +7,7 @@ import ChatMessageView from "./components/ChatMessageView";
 import AgentProgress from "./components/AgentProgress";
 import ThinkingIndicator from "./components/ThinkingIndicator";
 import DestImage from "./components/DestImage";
-import { classify, fetchHistory, planTrip } from "./lib/api";
+import { PLAN_TRIP_URL, classify, fetchHistory, planTrip } from "./lib/api";
 import { resetSessionId } from "./lib/session";
 import { destinationImage } from "./lib/images";
 import { EMPTY_FILTERS, composePrompt } from "./types";
@@ -137,7 +137,7 @@ export default function App() {
         isError: true,
         content: isAbort
           ? "**La solicitud tardó demasiado y se canceló.** El equipo de agentes puede tardar varios minutos; intenta de nuevo o simplifica tu petición."
-          : `**No pude comunicarme con el equipo de expertos.**\n\nVerifica que el backend esté corriendo en \`http://localhost:8005\`.\n\n*Detalle: ${detail}*`,
+          : `**No pude comunicarme con el equipo de expertos.**\n\nVerifica que el backend esté corriendo y sea accesible en \`${PLAN_TRIP_URL}\`, y que permita peticiones desde este dominio (CORS).\n\n*Detalle: ${detail}*`,
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
