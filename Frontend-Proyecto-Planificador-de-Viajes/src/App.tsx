@@ -102,13 +102,16 @@ export default function App() {
     setFilters(EMPTY_FILTERS);
   };
 
-  const handleSend = async (freeText: string) => {
+  // useFilters solo es true cuando viene del botón "Planificar viaje": los
+  // filtros del toolbar NO deben mezclarse con mensajes normales del chat
+  // (ni siquiera si hay valores cargados ahí sin confirmar).
+  const handleSend = async (freeText: string, useFilters = false) => {
     if (loading) return;
-    const prompt = composePrompt(freeText, filters);
+    const prompt = useFilters ? composePrompt(freeText, filters) : freeText.trim();
     if (!prompt.trim()) return;
     // Los filtros ya quedaron incluidos en el prompt: se limpian para que no
     // se repitan en los siguientes mensajes de la conversación.
-    if (hasAnyFilter) setFilters(EMPTY_FILTERS);
+    if (useFilters && hasAnyFilter) setFilters(EMPTY_FILTERS);
 
     const userMsg: ChatMessage = {
       id: nextId(),
@@ -169,7 +172,7 @@ export default function App() {
           </div>
           <button
             type="button"
-            onClick={() => handleSend("")}
+            onClick={() => handleSend("", true)}
             disabled={loading || !allFiltersFilled}
             className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-40"
           >
@@ -256,11 +259,7 @@ export default function App() {
         {/* Composer */}
         <div className="border-t border-slate-200 bg-white/80 backdrop-blur-xl">
           <div className="mx-auto max-w-3xl px-4 py-3">
-            <ChatInput
-              onSend={handleSend}
-              disabled={loading}
-              canSendEmpty={hasAnyFilter}
-            />
+            <ChatInput onSend={handleSend} disabled={loading} />
             <p className="mt-1.5 px-1 text-center text-[11px] text-slate-400">
               El asistente puede cometer errores. Verifica precios y
               disponibilidad. · Enter para enviar
